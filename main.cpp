@@ -27,7 +27,6 @@ void initialize() {
 	pros::lcd::set_text(1, "hello gamer pro gamer");
 	pros::lcd::set_text(2, "linux is cool");
 
-
 	pros::lcd::register_btn1_cb(on_center_button);
 }
 
@@ -76,11 +75,17 @@ void autonomous() {}
  * task, not resume it from where it left off.
  */
 void opcontrol() {
+// Motor and controller setup for AWD
 	pros::Controller master(pros::E_CONTROLLER_MASTER); 	// Controller setup
-	pros::Motor left_mtr(12);				// Left motor setup, (port)
-	pros::Motor right_mtr(20);				// Right motor setup, (port)
+	
+	pros::Motor left_mtr1(1);				// Left motor 1 setup, (port)
+	pros::Motor left_mtr2(2);				// Left motor 2
+	
+	pros::Motor right_mtr3(3);				// Right motor 3 setup, (port)
+	pros::Motor right_mtr4(4);				// Right motor 4 setup, (port)
 
 	while (true) {
+//		pros::c::battery_get_capacity batcapacity;
 		pros::lcd::print(0, "%d %d %d", (pros::lcd::read_buttons() & LCD_BTN_LEFT) >> 2, // Left button
 		
 		                 (pros::lcd::read_buttons() & LCD_BTN_CENTER) >> 1,		// Center button
@@ -89,8 +94,12 @@ void opcontrol() {
 		int left = master.get_analog(ANALOG_LEFT_Y);					// Controller tank controls
 		int right = master.get_analog(ANALOG_RIGHT_Y);					// Goes to variables 'left' and 'right'
 
-		left_mtr = left;								// Sets motor speed for 'left'
-		right_mtr = right;								// Sets motor speed for 'right'
+		left_mtr1 = left;								// Sets motor speed for 'left'
+		left_mtr2 = left;								//
+			
+		right_mtr3 = right;								// Sets motor speed for 'right'
+		right_mtr4 = right;
+		
 		pros::delay(20);								// Delay 
 		
 		
