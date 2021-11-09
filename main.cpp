@@ -3,6 +3,7 @@
 /**
 Notes about how to use and upload this code
 Made using PROS, probably will not work without it installed https://pros.cs.purdue.edu/
+You will need to make a project, replace main.cpp in src/ with this file, then you can compile it 
 
 Wiring:
 1, 2 	- Left motors
@@ -49,6 +50,18 @@ void initialize() {
 	pros::lcd::set_text(2, "linux is cool");
 
 	pros::lcd::register_btn1_cb(on_center_button);
+	
+	// Motor and controller setup for AWD and lift
+	pros::Controller master(pros::E_CONTROLLER_MASTER); 	// Controller setup
+	
+	pros::Motor left_mtr1(1);				// Left motor 1 setup, (port)
+	pros::Motor left_mtr2(2);				// Left motor 2
+	
+	pros::Motor right_mtr3(3);				// Right motor 3 setup, (port)
+	pros::Motor right_mtr4(4);				// Right motor 4 setup, (port)
+	
+	pros::Motor lift_mtr5(5);				// Lift motor 5 setup, (port)
+
 }
 
 /**
@@ -102,16 +115,6 @@ void autonomous() {
  * task, not resume it from where it left off.
  */
 void opcontrol() {
-// Motor and controller setup for AWD and lift
-	pros::Controller master(pros::E_CONTROLLER_MASTER); 	// Controller setup
-	
-	pros::Motor left_mtr1(1);				// Left motor 1 setup, (port)
-	pros::Motor left_mtr2(2);				// Left motor 2
-	
-	pros::Motor right_mtr3(3);				// Right motor 3 setup, (port)
-	pros::Motor right_mtr4(4);				// Right motor 4 setup, (port)
-	
-	pros::Motor lift_mtr5(5);				// Lift motor 5 setup, (port)
 
 	while (true) {
 //		pros::c::battery_get_capacity batcapacity;
