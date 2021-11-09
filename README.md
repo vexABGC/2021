@@ -1,14 +1,15 @@
 # Vex Robotics
-A place to store and collaborate on code for Robotics
+Notes about how to use and upload this code
+Made using PROS, probably will not work without it installed https://pros.cs.purdue.edu/
+You will need to make a project, replace main.cpp in src/ with this file, then you can compile it 
 
-## Info about PROS and how our code works
-In order to debug and use this code, you need to have PROS set up.
-https://pros.cs.purdue.edu/
-Due to us using another OS, we are using the above library instead of robotc
-That website will give you all the docuentation you should need
+Wiring:
+1, 2 	- Left motors
+3, 4 	- Right motors
+5	- Lift
 
-To reduce complexity, the other required files for a PROS workspace are not included (ex. firmware, makefiles, etc)
-In theory, you should be able to import this to a new project once you set up PROS on your PC (in src/)
+All operator control code (pretty much everything) is in the operator_control function at the bottom
 
-~~Note that in order to program the Cortex, you must use the dongle and plug in to the controller due to the inavailability of a Linux driver for Cortex. Still works, just an extra step. If you run PROS on Windows this is not neccessary. See https://pros.cs.purdue.edu/cortex/tutorials/known-issues.html#linux-a-a-tethering
-~~ Irelavent for V5
+If you need to reverse something, put a minus after the = where the code says to set the speed
+
+If you need anything majorly changed, please open an issue 
