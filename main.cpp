@@ -1,6 +1,27 @@
 #include "main.h"
 
 /**
+Notes about how to use and upload this code
+Made using PROS, probably will not work without it installed https://pros.cs.purdue.edu/
+
+Wiring:
+1, 2 	- Left motors
+3, 4 	- Right motors
+5	- Lift
+
+All operator control code (pretty much everything) is in the operator_control function at the bottom
+
+If you need to reverse something, put a minus after the = where the code says to set the speed
+
+If you need anything majorly changed, please open an issue on Github: https://github.com/NULL0404/vexrobotics/
+It's a private repository, you will need to log in and or have me add you to the repo, dm me on discord
+**/
+
+
+
+
+
+/**
  * A callback function for LLEMU's center button.
  *
  * When this callback is fired, it will toggle line 2 of the LCD text between
@@ -46,7 +67,9 @@ void disabled() {}
  * This task will exit when the robot is enabled and autonomous or opcontrol
  * starts.
  */
-void competition_initialize() {}
+void competition_initialize() {
+	pros::lcd::set_text(3, "Competition");
+}
 
 /**
  * Runs the user autonomous code. This function will be started in its own task
@@ -59,7 +82,11 @@ void competition_initialize() {}
  * will be stopped. Re-enabling the robot will restart the task, not re-start it
  * from where it left off.
  */
-void autonomous() {}
+void autonomous() {
+
+// this is for eric, do it
+
+}
 
 /**
  * Runs the operator control code. This function will be started in its own task
@@ -75,7 +102,7 @@ void autonomous() {}
  * task, not resume it from where it left off.
  */
 void opcontrol() {
-// Motor and controller setup for AWD
+// Motor and controller setup for AWD and lift
 	pros::Controller master(pros::E_CONTROLLER_MASTER); 	// Controller setup
 	
 	pros::Motor left_mtr1(1);				// Left motor 1 setup, (port)
@@ -83,6 +110,8 @@ void opcontrol() {
 	
 	pros::Motor right_mtr3(3);				// Right motor 3 setup, (port)
 	pros::Motor right_mtr4(4);				// Right motor 4 setup, (port)
+	
+	pros::Motor lift_mtr5(5);				// Lift motor 5 setup, (port)
 
 	while (true) {
 //		pros::c::battery_get_capacity batcapacity;
@@ -93,6 +122,9 @@ void opcontrol() {
 		                 
 		int left = master.get_analog(ANALOG_LEFT_Y);					// Controller tank controls
 		int right = master.get_analog(ANALOG_RIGHT_Y);					// Goes to variables 'left' and 'right'
+		
+//		int lift1 = master.get_digital(L1) - master.get_digital(L2);
+
 
 		left_mtr1 = left;								// Sets motor speed for 'left'
 		left_mtr2 = left;								//
@@ -100,10 +132,16 @@ void opcontrol() {
 		right_mtr3 = right;								// Sets motor speed for 'right'
 		right_mtr4 = right;
 		
+		lift_mtr5 = lift1;								// Sets motor speed for 'lift'
+		
+		// Reverse the above motors by putting a - after the =
+		
 		pros::delay(20);								// Delay 
 		
 		
 	}
 }
 
+
 // don't compile and upload with sudo, it won't work i think or something
+// remember to use pros make all to compile before using pros upload to upload
