@@ -51,16 +51,7 @@ void initialize() {
 
 	pros::lcd::register_btn1_cb(on_center_button);
 	
-	// Motor and controller setup for AWD and lift
-	pros::Controller master(pros::E_CONTROLLER_MASTER); 	// Controller setup
-	
-	pros::Motor left_mtr1(1);				// Left motor 1 setup, (port)
-	pros::Motor left_mtr2(2);				// Left motor 2
-	
-	pros::Motor right_mtr3(3);				// Right motor 3 setup, (port)
-	pros::Motor right_mtr4(4);				// Right motor 4 setup, (port)
-	
-	pros::Motor lift_mtr5(5);				// Lift motor 5 setup, (port)
+
 
 }
 
@@ -115,7 +106,16 @@ void autonomous() {
  * task, not resume it from where it left off.
  */
 void opcontrol() {
-
+	// Motor and controller setup for AWD and lift
+	pros::Controller master(pros::E_CONTROLLER_MASTER); 	// Controller setup
+	
+	pros::Motor left_mtr1(1);				// Left motor 1 setup, (port)
+	pros::Motor left_mtr2(2);				// Left motor 2
+	
+	pros::Motor right_mtr3(3);				// Right motor 3 setup, (port)
+	pros::Motor right_mtr4(4);				// Right motor 4 setup, (port)
+	
+	pros::Motor lift_mtr5(5);				// Lift motor 5 setup, (port)
 	while (true) {
 //		pros::c::battery_get_capacity batcapacity;
 		pros::lcd::print(0, "%d %d %d", (pros::lcd::read_buttons() & LCD_BTN_LEFT) >> 2, // Left button
@@ -135,7 +135,7 @@ void opcontrol() {
 		right_mtr3 = right;								// Sets motor speed for 'right'
 		right_mtr4 = right;
 		
-		lift_mtr5 = lift1;								// Sets motor speed for 'lift'
+//		lift_mtr5 = lift1;								// Sets motor speed for 'lift'
 		
 		// Reverse the above motors by putting a - after the =
 		
