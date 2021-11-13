@@ -4,16 +4,12 @@
 Notes about how to use and upload this code
 Made using PROS, probably will not work without it installed https://pros.cs.purdue.edu/
 You will need to make a project, replace main.cpp in src/ with this file, then you can compile it 
-
 Wiring:
 1, 2 	- Left motors
 3, 4 	- Right motors
 5	- Lift
-
 All operator control code (pretty much everything) is in the operator_control function at the bottom
-
 If you need to reverse something, put a minus after the = where the code says to set the speed
-
 If you need anything majorly changed, please open an issue on Github: https://github.com/NULL0404/vexrobotics/
 It's a private repository, you will need to log in and or have me add you to the repo, dm me on discord
 **/
@@ -123,7 +119,7 @@ void opcontrol() {
 		                 (pros::lcd::read_buttons() & LCD_BTN_CENTER) >> 1,		// Center button
 		                 (pros::lcd::read_buttons() & LCD_BTN_RIGHT) >> 0);		// Right button
 		                 
-		int left = master.get_analog(ANALOG_LEFT_Y);					// Controller tank controls
+		int left =- master.get_analog(ANALOG_LEFT_Y);					// Controller tank controls
 		int right = master.get_analog(ANALOG_RIGHT_Y);					// Goes to variables 'left' and 'right'
 		
 //		int lift1 = master.get_digital(L1) - master.get_digital(L2);
