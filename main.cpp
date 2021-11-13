@@ -110,6 +110,8 @@ void opcontrol() {
 	
 	pros::Motor right_mtr5(5);				// Right motor 3 setup, (port)
 	pros::Motor right_mtr4(4);				// Right motor 4 setup, (port)
+
+	pros::Motor ghgh(7); 
 	
 	while (true) {
 //		pros::c::battery_get_capacity batcapacity;
@@ -121,7 +123,7 @@ void opcontrol() {
 		int left =- master.get_analog(ANALOG_LEFT_Y);					// Controller tank controls
 		int right = master.get_analog(ANALOG_RIGHT_Y);					// Goes to variables 'left' and 'right'
 		
-//		int lift1 = master.get_digital(L1) - master.get_digital(L2);
+		int lift1 = master.get_digital(DIGITAL_L1) - master.get_digital(DIGITAL_L2);
 
 
 		left_mtr1 = left;								// Sets motor speed for 'left'
@@ -130,7 +132,8 @@ void opcontrol() {
 		right_mtr5 = right;								// Sets motor speed for 'right'
 		right_mtr4 = right;
 		
-		
+		ghgh = lift1;
+
 		// Reverse the above motors by putting a - after the =
 		
 		pros::delay(20);								// Delay 
