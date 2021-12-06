@@ -1,4 +1,5 @@
 #include "main.h"
+#define DIGITAL_SENSOR_PORT 'A'
 
 /**
 Notes about how to use and upload this code
@@ -26,7 +27,7 @@ It's a private repository, you will need to log in and or have me add you to the
  */
 void on_left_button() {
 	
-	#define DIGITAL_SENSOR_PORT 'A'
+
 	
 	
 	//pros::ADIDigitalOut piston (uint8_t A);
@@ -34,10 +35,10 @@ void on_left_button() {
 	pressed = !pressed;
 	if (pressed) {
 		//piston.set_value(true);
-		pros::ADIDigitalOut piston (DIGITAL_SENSOR_PORT);
-  		piston.set_value(true);
-  		pros::delay(1000);
-  		piston.set_value(false);
+		
+		
+		
+		
 	} else {
 		pros::lcd::clear_line(2);
 	}
@@ -67,7 +68,7 @@ void initialize() {
 	pros::lcd::register_btn1_cb(on_left_button);
 	pros::lcd::register_btn1_cb(on_right_button);
 
-
+	
 
 }
 
@@ -132,7 +133,7 @@ void opcontrol() {
 	pros::Motor right_mtr4(4);				// Right motor 4 setup, (port)
 
 	pros::Motor ghgh(7); 
-	
+	bool liftstate = false;
 	
 	
 	
@@ -147,40 +148,52 @@ void opcontrol() {
 		int left =- master.get_analog(ANALOG_LEFT_Y);					// Controller tank controls
 		int right = master.get_analog(ANALOG_RIGHT_Y);					// Goes to variables 'left' and 'right'
 		
-		int lift1 = master.get_digital(DIGITAL_L1) - master.get_digital(DIGITAL_L2);	// Lift
 
 		int miving = master.get_digital(DIGITAL_R1) - master.get_digital(DIGITAL_R2);
 
+		bool liftup = master.get_digital(DIGITAL_L2);
+		bool liftdown = master.get_digital(DIGITAL_L1);
+
 		
-		// Speed multiplier 
-/*		if (master.get_digital(DIGITAL_L2 = 0) {
-			if (master.get_digital(DIGITAL_L1 = 0) {
-				int linux = 0.7;
+	//	pros::lcd::set_text(3, );
+		
+
+
+
+
+
+
+		if (liftup == true) {
+			if (liftstate == false) {
+			#define DIGITAL_SENSOR_PORT 'A'  			
+			pros::ADIDigitalOut piston (DIGITAL_SENSOR_PORT);
+			bool liftstate = true ;
+			piston.set_value(true);
 			}
 			
-			else {
-				if (master.get_digital(DIGITAL_L2 = 0) {
-					int linux = 0.3
-				}
-				else {
-					int linux = 1
-				}
-			}	
-		} 
-*/
+			if (liftdown == true) {
+			if (liftstate == true) {
+			#define DIGITAL_SENSOR_PORT 'A'  			
+			pros::ADIDigitalOut piston (DIGITAL_SENSOR_PORT);
+			bool liftstate = false ;
+			piston.set_value(false);
+			}
+		}
+		}
+
+		
+
+
+
 		left_mtr1 = left;// * linux;								// Sets motor speed for 'left'
 		left_mtr2 = left;// * linux;								//
 			
 		right_mtr5 = right;// * linux;								// Sets motor speed for 'right'
 		right_mtr4 = right;// * linux;
 		
-		ghgh = lift1;
 		
 		// Reverse the above motors by putting a - after the =
-		
-		
-		
-		pros::delay(20);								// Delay 
+
 		
 		
 	}
