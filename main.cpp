@@ -16,61 +16,7 @@ It's a private repository, you will need to log in and or have me add you to the
 **/
 
 
-
-
-
-/**
- * A callback function for LLEMU's center button.
- *
- * When this callback is fired, it will toggle line 2 of the LCD text between
- * "I was pressed!" and nothing.
- */
-void on_left_button() {
-	
-
-	
-	
-	//pros::ADIDigitalOut piston (uint8_t A);
-	static bool pressed = false;
-	pressed = !pressed;
-	if (pressed) {
-		//piston.set_value(true);
-		
-		
-		
-		
-	} else {
-		pros::lcd::clear_line(2);
-	}
-}
-
-void on_right_button() {
-//	pros::ADIDigitalOut piston (uint8_t A);
-//	static bool pressed = false;
-//	pressed = !pressed;
-//	if (pressed) {
-//		piston.set_value(false);
-//	} else {
-//		pros::lcd::clear_line(2);
-//	}
-}
-/**
- * Runs initialization code. This occurs as soon as the program is started.
- *
- * All other competition modes are blocked by initialize; it is recommended
- * to keep execution time for this mode under a few seconds.
- */
-void initialize() {
-	pros::lcd::initialize();
-	pros::lcd::set_text(1, "hello gamer pro gamer");
-	pros::lcd::set_text(2, "linux is cool");
-
-	pros::lcd::register_btn1_cb(on_left_button);
-	pros::lcd::register_btn1_cb(on_right_button);
-
-	
-
-}
+void initialize() {}
 
 /**
  * Runs while the robot is in the disabled state of Field Management System or
@@ -88,9 +34,7 @@ void disabled() {}
  * This task will exit when the robot is enabled and autonomous or opcontrol
  * starts.
  */
-void competition_initialize() {
-	pros::lcd::set_text(3, "Competition");
-}
+void competition_initialize() {}
 
 /**
  * Runs the user autonomous code. This function will be started in its own task
@@ -123,7 +67,6 @@ void autonomous() {
  * task, not resume it from where it left off.
  */
 void opcontrol() {
-	// Motor and controller setup for AWD and lift
 	pros::Controller master(pros::E_CONTROLLER_MASTER); 	// Controller setup
 	
 	pros::Motor left_mtr1(1);				// Left motor 1 setup, (port)
@@ -133,49 +76,58 @@ void opcontrol() {
 	pros::Motor right_mtr4(4);				// Right motor 4 setup, (port)
 
 	pros::Motor ghgh(7); 
-	bool liftstate = false;
+	bool bliftstate = false;
+	bool aliftstate = false;
 	
 	
 	
 	
 	while (true) {
-//		pros::c::battery_get_capacity batcapacity;
-		pros::lcd::print(0, "%d %d %d", (pros::lcd::read_buttons() & LCD_BTN_LEFT) >> 2, // Left button
-		
-		                 (pros::lcd::read_buttons() & LCD_BTN_CENTER) >> 1,		// Center button
-		                 (pros::lcd::read_buttons() & LCD_BTN_RIGHT) >> 0);		// Right button
-		                 
 		int left =- master.get_analog(ANALOG_LEFT_Y);					// Controller tank controls
 		int right = master.get_analog(ANALOG_RIGHT_Y);					// Goes to variables 'left' and 'right'
 		
 
-		int miving = master.get_digital(DIGITAL_R1) - master.get_digital(DIGITAL_R2);
 
-		bool liftup = master.get_digital(DIGITAL_L2);
-		bool liftdown = master.get_digital(DIGITAL_L1);
+		bool bliftup = master.get_digital(DIGITAL_L2);
+		bool bliftdown = master.get_digital(DIGITAL_L1);
 
+		bool aliftup = master.get_digital(DIGITAL_R2);
+		bool aliftdown = master.get_digital(DIGITAL_R1);
 		
-	//	pros::lcd::set_text(3, );
-		
 
+		// let's setup lifts
 
-
-
-
-
-		if (liftup == true) {
-			if (liftstate == false) {
-			#define DIGITAL_SENSOR_PORT 'A'  			
-			pros::ADIDigitalOut piston (DIGITAL_SENSOR_PORT);
-			bool liftstate = true ;
+		if (aliftup == true) {
+			if (aliftstate == false) {
+			#define ADIGITAL_SENSOR_PORT 'B'  		// this command is the most shit thing of all time, define the sensor port as many times as you can otherwise it just will not work also never try to touch this code bro trust me	
+			pros::ADIDigitalOut piston (ADIGITAL_SENSOR_PORT);
+			bool aliftstate = true ;
 			piston.set_value(true);
 			}
 			
-			if (liftdown == true) {
-			if (liftstate == true) {
+			if (aliftdown == true) {
+			if (aliftstate == true) {
+			#define ADIGITAL_SENSOR_PORT 'B'  			
+			pros::ADIDigitalOut piston (ADIGITAL_SENSOR_PORT);
+			bool aliftstate = false ;
+			piston.set_value(false);
+			}
+		}
+		}
+
+		if (bliftup == true) {
+			if (bliftstate == false) {
 			#define DIGITAL_SENSOR_PORT 'A'  			
 			pros::ADIDigitalOut piston (DIGITAL_SENSOR_PORT);
-			bool liftstate = false ;
+			bool bliftstate = true ;
+			piston.set_value(true);
+			}
+			
+			if (bliftdown == true) {
+			if (bliftstate == true) {
+			#define DIGITAL_SENSOR_PORT 'A'  			
+			pros::ADIDigitalOut piston (DIGITAL_SENSOR_PORT);
+			bool bliftstate = false ;
 			piston.set_value(false);
 			}
 		}
