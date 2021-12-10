@@ -14,17 +14,13 @@ If you need to reverse something, put a minus after the = where the code says to
 If you need anything majorly changed, please open an issue on Github: https://github.com/NULL0404/vexrobotics/
 It's a private repository, you will need to log in and or have me add you to the repo, dm me on discord
 **/
-
-
 void initialize() {}
-
 /**
  * Runs while the robot is in the disabled state of Field Management System or
  * the VEX Competition Switch, following either autonomous or opcontrol. When
  * the robot is enabled, this task will exit.
  */
 void disabled() {}
-
 /**
  * Runs after initialize(), and before autonomous when connected to the Field
  * Management System or the VEX Competition Switch. This is intended for
@@ -35,7 +31,6 @@ void disabled() {}
  * starts.
  */
 void competition_initialize() {}
-
 /**
  * Runs the user autonomous code. This function will be started in its own task
  * with the default priority and stack size whenever the robot is enabled via
@@ -48,11 +43,8 @@ void competition_initialize() {}
  * from where it left off.
  */
 void autonomous() {
-
 // this is for eric, do it
-
 }
-
 /**
  * Runs the operator control code. This function will be started in its own task
  * with the default priority and stack size whenever the robot is enabled via
@@ -69,45 +61,53 @@ void autonomous() {
 void opcontrol() {
 	pros::Controller master(pros::E_CONTROLLER_MASTER); 	// Controller setup
 	
-	pros::Motor left_mtr1(1);				// Left motor 1 setup, (port)
-	pros::Motor left_mtr2(2);				// Left motor 2
+	pros::Motor left_mtr1(1);				// Left motor setup, (port)
+	pros::Motor left_mtr2(2);				
+	pros::Motor left_mtr3(3);
 	
-	pros::Motor right_mtr5(5);				// Right motor 3 setup, (port)
-	pros::Motor right_mtr4(4);				// Right motor 4 setup, (port)
+	pros::Motor right_mtr4(4);				// Right motor setup, (port)
+	pros::Motor right_mtr5(5);				
+	pros::Motor right_mtr6(6);	
 
-	pros::Motor ghgh(7); 
+	bool aliftstate = false;				// Sets the lift state by default
 	bool bliftstate = false;
-	bool aliftstate = false;
-	
-	
-	
 	
 	while (true) {
-		int left =- master.get_analog(ANALOG_LEFT_Y);					// Controller tank controls
-		int right = master.get_analog(ANALOG_RIGHT_Y);					// Goes to variables 'left' and 'right'
+		// Fetch controller
+			int left =- master.get_analog(ANALOG_LEFT_Y);					
+			int right = master.get_analog(ANALOG_RIGHT_Y);	
+
+			bool bliftup = master.get_digital(DIGITAL_L2);
+
+			bool aliftup = master.get_digital(DIGITAL_R2);
+			
+			bool bliftdown = master.get_digital(DIGITAL_L1);
+
+			bool aliftdown = master.get_digital(DIGITAL_R1);
 		
 
-
-		bool bliftup = master.get_digital(DIGITAL_L2);
-		bool bliftdown = master.get_digital(DIGITAL_L1);
-
-		bool aliftup = master.get_digital(DIGITAL_R2);
-		bool aliftdown = master.get_digital(DIGITAL_R1);
+		left_mtr1 = left;// * linux;								// Sets motor speed for 'left'
+		left_mtr2 = left;// * linux;
+		left_mtr3 = left;
+			
+		right_mtr4 = right;// * linux;								// Sets motor speed for 'right'
+		right_mtr5 = right;// * linux;
+		right_mtr6 = right; 
 		
-
-		// let's setup lifts
+		// Reverse the above motors by putting a - after the =
 
 		if (aliftup == true) {
 			if (aliftstate == false) {
-			#define ADIGITAL_SENSOR_PORT 'B'  		// this command is the most shit thing of all time, define the sensor port as many times as you can otherwise it just will not work also never try to touch this code bro trust me	
+			#define ADIGITAL_SENSOR_PORT 'A'  		// this command is the most shit thing of all time, define the sensor port as many times as you can otherwise it just will not work also never try to touch this code bro trust me	
 			pros::ADIDigitalOut piston (ADIGITAL_SENSOR_PORT);
 			bool aliftstate = true ;
 			piston.set_value(true);
 			}
 			
 			if (aliftdown == true) {
+
 			if (aliftstate == true) {
-			#define ADIGITAL_SENSOR_PORT 'B'  			
+			#define ADIGITAL_SENSOR_PORT 'A'  			
 			pros::ADIDigitalOut piston (ADIGITAL_SENSOR_PORT);
 			bool aliftstate = false ;
 			piston.set_value(false);
@@ -115,6 +115,7 @@ void opcontrol() {
 		}
 		}
 
+/*
 		if (bliftup == true) {
 			if (bliftstate == false) {
 			#define DIGITAL_SENSOR_PORT 'A'  			
@@ -131,26 +132,14 @@ void opcontrol() {
 			piston.set_value(false);
 			}
 		}
+		} 
+*/
+			}
 		}
-
-		
-
-
-
-		left_mtr1 = left;// * linux;								// Sets motor speed for 'left'
-		left_mtr2 = left;// * linux;								//
-			
-		right_mtr5 = right;// * linux;								// Sets motor speed for 'right'
-		right_mtr4 = right;// * linux;
 		
 		
-		// Reverse the above motors by putting a - after the =
-
-		
-		
-	}
-}
 
 
 // don't compile and upload with sudo, it won't work i think or something
 // remember to use pros make all to compile before using pros upload to upload
+// I eat poop when I am fungrty
