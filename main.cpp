@@ -44,6 +44,27 @@ void competition_initialize() {}
  */
 void autonomous() {
 // this is for eric, do it
+    pros::Controller master(pros::E_CONTROLLER_MASTER); 	// Controller setup
+
+	pros::Motor left_mtr1(1);				// Left motor setup, (port)
+	pros::Motor left_mtr2(2);
+	pros::Motor left_mtr3(3);
+
+	pros::Motor right_mtr4(4);				// Right motor setup, (port)
+	pros::Motor right_mtr5(5);
+	pros::Motor right_mtr6(6);
+
+	bool aliftstate = false;				// Sets the lift state by default
+	bool bliftstate = false;
+
+    left_mtr1 = 50;
+	left_mtr2 = 50;
+    left_mtr2 = 50;
+    delay(200);
+
+    left_mtr1 = 0;
+	left_mtr2 = 0;
+    left_mtr2 = 0;
 }
 /**
  * Runs the operator control code. This function will be started in its own task
