@@ -98,22 +98,24 @@ void opcontrol() {
 			int left =- master.get_analog(ANALOG_LEFT_Y);					
 			int right = master.get_analog(ANALOG_RIGHT_Y);	
 
-			bool bliftup = master.get_digital(DIGITAL_L2);
-
 			bool aliftup = master.get_digital(DIGITAL_R2);
-			
-			bool bliftdown = master.get_digital(DIGITAL_L1);
-
 			bool aliftdown = master.get_digital(DIGITAL_R1);
-		
 
-		left_mtr1 = left;// * linux;								// Sets motor speed for 'left'
-		left_mtr2 = left;// * linux;
-		left_mtr3 = left;
+            bool buttoon = master.get_digital(DIGITAL_L1);
+
+        if  buttoon = true {
+            int linux = 0.3 ;
+        }
+        else {
+            int linux = 1 ;
+        }
+		left_mtr1 = left * linux;								// Sets motor speed for 'left'
+		left_mtr2 = left * linux;
+		left_mtr3 = left * linux;
 			
-		right_mtr4 = right;// * linux;								// Sets motor speed for 'right'
-		right_mtr5 = right;// * linux;
-		right_mtr6 = right; 
+		right_mtr4 = right * linux;								// Sets motor speed for 'right'
+		right_mtr5 = right * linux;
+		right_mtr6 = right * linux;
 		
 		// Reverse the above motors by putting a - after the =
 
