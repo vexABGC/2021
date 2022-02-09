@@ -60,7 +60,7 @@ void autonomous() {
     left_mtr1 = 50;
 	left_mtr2 = 50;
     left_mtr2 = 50;
-    delay(200);
+    pros::delay(200);
 
     left_mtr1 = 0;
 	left_mtr2 = 0;
@@ -93,6 +93,8 @@ void opcontrol() {
 	bool aliftstate = false;				// Sets the lift state by default
 	bool bliftstate = false;
 	
+    int linux = 1;
+
 	while (true) {
 		// Fetch controller
 			int left =- master.get_analog(ANALOG_LEFT_Y);					
@@ -103,12 +105,13 @@ void opcontrol() {
 
             bool buttoon = master.get_digital(DIGITAL_L1);
 
-        if  buttoon = true {
+        if  (buttoon = true) {
             int linux = 0.3 ;
         }
         else {
             int linux = 1 ;
         }
+
 		left_mtr1 = left * linux;								// Sets motor speed for 'left'
 		left_mtr2 = left * linux;
 		left_mtr3 = left * linux;
