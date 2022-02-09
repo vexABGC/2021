@@ -10,10 +10,12 @@ If you need to reverse something, put a minus after the = where the code says to
 
 If you need anything majorly changed, please open an issue 
 
+When editing code, always `git pull` and `git push` so the code stays 
+
 ## Wiring
 
-1, 2 	- Left motors
+1 - 3 	- Left motors
 
-3, 4 	- Right motors
+4 - 6 	- Right motors
 
-5	- Lift
+PNEUMATIC lift on A
