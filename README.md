@@ -23,4 +23,4 @@ If you can't figure this out or suffer a *windows moment* you can copy and paste
 
 4 - 6 	- Right motors
 
-PNEUMATIC lift on A
+8 - 9   - Lift A motors
