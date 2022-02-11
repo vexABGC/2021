@@ -43,7 +43,13 @@ void competition_initialize() {}
  * from where it left off.
  */
 void autonomous() {
-// this is for eric, do it
+/*
+ * Note: This autonomous code is UNTESTED and was created prior to robot construction.
+ * Make sure the code is up to  date by using 'git pull'
+ *
+ * This should go forward, grab the ring holder, and retreat. Variables to be changed
+*/
+
     pros::Controller master(pros::E_CONTROLLER_MASTER); 	// Controller setup
 
 	pros::Motor left_mtr1(1);				// Left motor setup, (port)
@@ -54,17 +60,62 @@ void autonomous() {
 	pros::Motor right_mtr5(5);
 	pros::Motor right_mtr6(6);
 
+    pros::Motor lift_mtr8(8);
+    pros::Motor lift_mtr9(9);
+
+
 	bool aliftstate = false;				// Sets the lift state by default
-	bool bliftstate = false;
 
-    left_mtr1 = 50;
-	left_mtr2 = 50;
-    left_mtr2 = 50;
-    pros::delay(200);
+	lift_mtr8 = -50;
+    lift_mtr9 = -50; // Ensure the lift starts lowering, just in case it is in a higher position
 
-    left_mtr1 = 0;
+
+    left_mtr1 = 70;  // Move forward on all motors at speed 70
+	left_mtr2 = 70;
+    left_mtr3 = 70;
+    right_mtr4 = 70;
+    right_mtr5 = 70;
+    right_mtr6 = 70;
+
+    pros::delay(200); // Wait 2 seconds
+
+    left_mtr1 = 0;  // Stop all motors
 	left_mtr2 = 0;
-    left_mtr2 = 0;
+    left_mtr3 = 0;
+    right_mtr4 = 0;
+    right_mtr5 = 0;
+    right_mtr6 = 0;
+	lift_mtr8 = 0;
+    lift_mtr9 = 0;
+
+
+    pros::delay(20); // Small delay to let everything stop before lifting
+
+    lift_mtr8 = 70;  // Lift
+    lift_mtr8 = 70;
+
+    pros::delay(50); // Delay to let the lift lift
+
+   	lift_mtr8 = 0;   // stop lifting
+	lift_mtr9 = 0;
+
+    left_mtr1 = -70;  // Move back on all motors at speed -70
+	left_mtr2 = -70;
+    left_mtr3 = -70;
+    right_mtr4 = -70;
+    right_mtr5 = -70;
+    right_mtr6 = -70;
+
+    pros::delay(200); // Same delay as earlier, hopefully this puts us where we need to be
+
+    left_mtr1 = 0;  // Stop all motors
+	left_mtr2 = 0;
+    left_mtr3 = 0;
+    right_mtr4 = 0;
+    right_mtr5 = 0;
+    right_mtr6 = 0;
+	lift_mtr8 = 0;
+    lift_mtr9 = 0;
 }
 /**
  * Runs the operator control code. This function will be started in its own task
@@ -90,8 +141,10 @@ void opcontrol() {
 	pros::Motor right_mtr5(5);				
 	pros::Motor right_mtr6(6);	
 
-	bool aliftstate = false;				// Sets the lift state by default
-	bool bliftstate = false;
+
+    pros::Motor lift_mtr8(8);               // Lift motor setup, (port)
+    pros::Motor lift_mtr9(9);
+
 	
     int linux = 1;
 
@@ -103,6 +156,10 @@ void opcontrol() {
 			bool aliftup = master.get_digital(DIGITAL_R2);
 			bool aliftdown = master.get_digital(DIGITAL_R1);
 
+            bool bliftup = master.get_digital(DIGITAL_R2);
+			bool bliftdown = master.get_digital(DIGITAL_R1);
+
+/* To be rebind to another button, both bumpers and triggers will be used for the lift
             bool buttoon = master.get_digital(DIGITAL_L1);
 
         if  (buttoon = true) {
@@ -111,6 +168,7 @@ void opcontrol() {
         else {
             int linux = 1 ;
         }
+*/ int linux = 1;
 
 		left_mtr1 = left * linux;								// Sets motor speed for 'left'
 		left_mtr2 = left * linux;
@@ -122,47 +180,16 @@ void opcontrol() {
 		
 		// Reverse the above motors by putting a - after the =
 
-		if (aliftup == true) {
-			if (aliftstate == false) {
-			#define ADIGITAL_SENSOR_PORT 'A'  		// this command is the most shit thing of all time, define the sensor port as many times as you can otherwise it just will not work also never try to touch this code bro trust me	
-			pros::ADIDigitalOut piston (ADIGITAL_SENSOR_PORT);
-			bool aliftstate = true ;
-			piston.set_value(true);
-			}
-			
-			if (aliftdown == true) {
-
-			if (aliftstate == true) {
-			#define ADIGITAL_SENSOR_PORT 'A'  			
-			pros::ADIDigitalOut piston (ADIGITAL_SENSOR_PORT);
-			bool aliftstate = false ;
-			piston.set_value(false);
+        if (bool aliftup = true) {
+            lift_mtr8 = 70;
+            lift_mtr9 = 70;
 			}
 		}
-		}
-
-/*
-		if (bliftup == true) {
-			if (bliftstate == false) {
-			#define DIGITAL_SENSOR_PORT 'A'  			
-			pros::ADIDigitalOut piston (DIGITAL_SENSOR_PORT);
-			bool bliftstate = true ;
-			piston.set_value(true);
-			}
-			
-			if (bliftdown == true) {
-			if (bliftstate == true) {
-			#define DIGITAL_SENSOR_PORT 'A'  			
-			pros::ADIDigitalOut piston (DIGITAL_SENSOR_PORT);
-			bool bliftstate = false ;
-			piston.set_value(false);
+		if (bool aliftdown = true) {
+            lift_mtr8 = -70;
+            lift_mtr9 = -70;
 			}
 		}
-		} 
-*/
-			}
-		}
-		
 		
 
 
