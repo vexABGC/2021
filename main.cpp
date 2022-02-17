@@ -67,7 +67,7 @@ void autonomous() {
 	bool aliftstate = false;				// Sets the lift state by default
 
 	lift_mtr8 = -50;
-    lift_mtr9 = -50; // Ensure the lift starts lowering, just in case it is in a higher position
+    lift_mtr9 = 50; // Ensure the lift starts lowering, just in case it is in a higher position
 
 
     left_mtr1 = 70;  // Move forward on all motors at speed 70
@@ -92,7 +92,7 @@ void autonomous() {
     pros::delay(20); // Small delay to let everything stop before lifting
 
     lift_mtr8 = 70;  // Lift
-    lift_mtr8 = 70;
+    lift_mtr8 = -70;
 
     pros::delay(50); // Delay to let the lift lift
 
@@ -182,12 +182,12 @@ void opcontrol() {
 
         if (bool aliftup = true) {
             lift_mtr8 = 70;
-            lift_mtr9 = 70;
+            lift_mtr9 = -70;
 			}
 		}
 		if (bool aliftdown = true) {
             lift_mtr8 = -70;
-            lift_mtr9 = -70;
+            lift_mtr9 = 70;
 			}
 		}
 		
