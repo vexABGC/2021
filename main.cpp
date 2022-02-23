@@ -150,8 +150,8 @@ void opcontrol() {
 
 	while (true) {
 		// Fetch controller
-			int left =- master.get_analog(ANALOG_LEFT_Y);					
-			int right = master.get_analog(ANALOG_RIGHT_Y);	
+			int left = master.get_analog(ANALOG_LEFT_Y);
+			int right =- master.get_analog(ANALOG_RIGHT_Y);
 
 			bool aliftup = master.get_digital(DIGITAL_R2);
 			bool aliftdown = master.get_digital(DIGITAL_R1);
@@ -170,13 +170,13 @@ void opcontrol() {
         }
 */ int linux = 1;
 
-		left_mtr1 = left * linux;								// Sets motor speed for 'left'
-		left_mtr2 = left * linux;
-		left_mtr3 = left * linux;
+		left_mtr1 = left;								// Sets motor speed for 'left'
+		left_mtr2 = left;
+		left_mtr3 = left;
 			
-		right_mtr4 = right * linux;								// Sets motor speed for 'right'
-		right_mtr5 = right * linux;
-		right_mtr6 = right * linux;
+		right_mtr4 = right;							// Sets motor speed for 'right'
+		right_mtr5 = right;
+		right_mtr6 = right;
 		
 		// Reverse the above motors by putting a - after the =
 
