@@ -63,9 +63,6 @@ void autonomous() {
     pros::Motor lift_mtr8(8);
     pros::Motor lift_mtr9(9);
 
-
-	bool aliftstate = false;				// Sets the lift state by default
-
 	lift_mtr8 = -50;
     lift_mtr9 = 50; // Ensure the lift starts lowering, just in case it is in a higher position
 
@@ -137,21 +134,21 @@ void opcontrol() {
 	pros::Motor left_mtr2(2);				
 	pros::Motor left_mtr3(3);
 	
-	pros::Motor right_mtr4(4);				// Right motor setup, (port)
-	pros::Motor right_mtr5(5);				
-	pros::Motor right_mtr6(6);	
+	pros::Motor right_mtr4(8);				// Right motor setup, (port)
+	pros::Motor right_mtr5(9);
+	pros::Motor right_mtr6(10);
 
 
-    pros::Motor lift_mtr8(8);               // Lift motor setup, (port)
-    pros::Motor lift_mtr9(9);
+    pros::Motor lift_mtr8(11);               // Lift motor setup, (port)
+    pros::Motor lift_mtr9(12);
 
 	
     int linux = 1;
 
 	while (true) {
 		// Fetch controller
-			int left = master.get_analog(ANALOG_LEFT_Y);
-			int right =- master.get_analog(ANALOG_RIGHT_Y);
+			int forward  = master.get_analog(ANALOG_LEFT_Y) * 2;
+			int turn     =- master.get_analog(ANALOG_RIGHT_X) * 2;
 
 			bool aliftup = master.get_digital(DIGITAL_R2);
 			bool aliftdown = master.get_digital(DIGITAL_R1);
@@ -170,14 +167,17 @@ void opcontrol() {
         }
 */ int linux = 1;
 
-		left_mtr1 = left;								// Sets motor speed for 'left'
-		left_mtr2 = left;
-		left_mtr3 = left;
+
+		left_mtr1 = forward - turn ;								// Sets motor speed for 'left'
+		left_mtr2 = forward - turn ;
+		left_mtr3 = forward - turn ;
 			
-		right_mtr4 = right;							// Sets motor speed for 'right'
-		right_mtr5 = right;
-		right_mtr6 = right;
+		right_mtr4 =- forward - turn ;							// Sets motor speed for 'right'
+		right_mtr5 =- forward - turn ;
+		right_mtr6 =- forward - turn  ;
 		
+
+
 		// Reverse the above motors by putting a - after the =
 
         if (bool aliftup = true) {
@@ -185,6 +185,7 @@ void opcontrol() {
             lift_mtr9 = -70;
 			}
 		}
+
 		if (bool aliftdown = true) {
             lift_mtr8 = -70;
             lift_mtr9 = 70;
