@@ -49,7 +49,7 @@ void autonomous() {
  *
  * This should go forward, grab the ring holder, and retreat. Variables to be changed
 */
-
+/*
     pros::Controller master(pros::E_CONTROLLER_MASTER); 	// Controller setup
 
 	pros::Motor left_mtr1(1);				// Left motor setup, (port)
@@ -113,6 +113,8 @@ void autonomous() {
     right_mtr6 = 0;
 	lift_mtr8 = 0;
     lift_mtr9 = 0;
+
+    */
 }
 /**
  * Runs the operator control code. This function will be started in its own task
@@ -139,22 +141,14 @@ void opcontrol() {
 	pros::Motor right_mtr6(10);
 
 
-    pros::Motor lift_mtr8(11);               // Lift motor setup, (port)
-    pros::Motor lift_mtr9(12);
+    pros::Motor lift_mtr8(4);               // Lift motor setup, (port)
+    pros::Motor lift_mtr9(5);
 
-	
-    int linux = 1;
 
 	while (true) {
 		// Fetch controller
-			int forward  = master.get_analog(ANALOG_LEFT_Y) * 2;
-			int turn     =- master.get_analog(ANALOG_RIGHT_X) * 2;
-
-			bool aliftup = master.get_digital(DIGITAL_R2);
-			bool aliftdown = master.get_digital(DIGITAL_R1);
-
-            bool bliftup = master.get_digital(DIGITAL_R2);
-			bool bliftdown = master.get_digital(DIGITAL_R1);
+			int left  = master.get_analog(ANALOG_LEFT_Y) * 2;
+			int right = master.get_analog(ANALOG_RIGHT_Y) * 2;
 
 /* To be rebind to another button, both bumpers and triggers will be used for the lift
             bool buttoon = master.get_digital(DIGITAL_L1);
@@ -168,30 +162,31 @@ void opcontrol() {
 */ int linux = 1;
 
 
-		left_mtr1 = forward - turn ;								// Sets motor speed for 'left'
-		left_mtr2 = forward - turn ;
-		left_mtr3 = forward - turn ;
+		left_mtr1 = left ;								// Sets motor speed for 'left'
+		left_mtr2 = left ;
+		left_mtr3 = left ;
 			
-		right_mtr4 =- forward - turn ;							// Sets motor speed for 'right'
-		right_mtr5 =- forward - turn ;
-		right_mtr6 =- forward - turn  ;
+		right_mtr4 =- right ;							// Sets motor speed for 'right'
+		right_mtr5 =- right ;
+		right_mtr6 =- right  ;
 		
 
+        if (master.get_digital(DIGITAL_R1)) {
+            lift_mtr8 = 100;
+            lift_mtr9 = -100;
+        }
+        else if (master.get_digital(DIGITAL_R2)) {
+            lift_mtr8 = -100;
+            lift_mtr9 = 100;        }
+        else {
+            lift_mtr8 = 0;
+            lift_mtr9 = 0;
+        }
 
+    }
+}
 		// Reverse the above motors by putting a - after the =
 
-        if (bool aliftup = true) {
-            lift_mtr8 = 70;
-            lift_mtr9 = -70;
-			}
-		}
-
-		if (bool aliftdown = true) {
-            lift_mtr8 = -70;
-            lift_mtr9 = 70;
-			}
-		}
-		
 
 
 // don't compile and upload with sudo, it won't work i think or something
