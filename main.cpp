@@ -1,6 +1,6 @@
 #include "main.h"
 #define DIGITAL_SENSOR_PORT 'A'
-
+//#include "autoSelect/selection.h"
 /**
 Notes about how to use and upload this code
 Made using PROS, probably will not work without it installed https://pros.cs.purdue.edu/
@@ -14,7 +14,9 @@ If you need to reverse something, put a minus after the = where the code says to
 If you need anything majorly changed, please open an issue on Github: https://github.com/NULL0404/vexrobotics/
 It's a private repository, you will need to log in and or have me add you to the repo, dm me on discord
 **/
-void initialize() {}
+void initialize() {
+ //   selector::init();
+}
 /**
  * Runs while the robot is in the disabled state of Field Management System or
  * the VEX Competition Switch, following either autonomous or opcontrol. When
@@ -49,32 +51,32 @@ void autonomous() {
  *
  * This should go forward, grab the ring holder, and retreat. Variables to be changed
 */
-/*
-    pros::Controller master(pros::E_CONTROLLER_MASTER); 	// Controller setup
-
+	pros::Controller master(pros::E_CONTROLLER_MASTER); 	// Controller setup
+	
 	pros::Motor left_mtr1(1);				// Left motor setup, (port)
-	pros::Motor left_mtr2(2);
+	pros::Motor left_mtr2(2);				
 	pros::Motor left_mtr3(3);
-
-	pros::Motor right_mtr4(4);				// Right motor setup, (port)
-	pros::Motor right_mtr5(5);
-	pros::Motor right_mtr6(6);
-
-    pros::Motor lift_mtr8(8);
-    pros::Motor lift_mtr9(9);
-
-	lift_mtr8 = -50;
-    lift_mtr9 = 50; // Ensure the lift starts lowering, just in case it is in a higher position
+	
+	pros::Motor right_mtr4(8);				// Right motor setup, (port)
+	pros::Motor right_mtr5(9);
+	pros::Motor right_mtr6(10);
 
 
-    left_mtr1 = 70;  // Move forward on all motors at speed 70
-	left_mtr2 = 70;
-    left_mtr3 = 70;
-    right_mtr4 = 70;
-    right_mtr5 = 70;
-    right_mtr6 = 70;
+    pros::Motor lift_mtr8(4);               // Lift motor setup, (port)
+    pros::Motor lift_mtr9(5);
 
-    pros::delay(200); // Wait 2 seconds
+//	lift_mtr8 = -50;
+//    lift_mtr9 = 50; // Ensure the lift starts lowering, just in case it is in a higher position
+
+
+    left_mtr1 = 100;  // Move forward on all motors at speed 100
+	left_mtr2 = 100;
+    left_mtr3 = 100;
+    right_mtr4 = -100;
+    right_mtr5 = -100;
+    right_mtr6 = -100;
+
+    pros::delay(2000); // Wait 2 seconds
 
     left_mtr1 = 0;  // Stop all motors
 	left_mtr2 = 0;
@@ -88,22 +90,22 @@ void autonomous() {
 
     pros::delay(20); // Small delay to let everything stop before lifting
 
-    lift_mtr8 = 70;  // Lift
-    lift_mtr8 = -70;
+    lift_mtr8 = 100;  // Lift
+    lift_mtr8 = -100;
 
-    pros::delay(50); // Delay to let the lift lift
+    pros::delay(500); // Delay to let the lift lift
 
    	lift_mtr8 = 0;   // stop lifting
 	lift_mtr9 = 0;
 
-    left_mtr1 = -70;  // Move back on all motors at speed -70
-	left_mtr2 = -70;
-    left_mtr3 = -70;
-    right_mtr4 = -70;
-    right_mtr5 = -70;
-    right_mtr6 = -70;
+    left_mtr1 = -100;  // Move back on all motors at speed -100
+	left_mtr2 = -100;
+    left_mtr3 = -100;
+    right_mtr4 = 100;
+    right_mtr5 = 100;
+    right_mtr6 = 100;
 
-    pros::delay(200); // Same delay as earlier, hopefully this puts us where we need to be
+    pros::delay(2000); // Same delay as earlier, hopefully this puts us where we need to be
 
     left_mtr1 = 0;  // Stop all motors
 	left_mtr2 = 0;
@@ -113,8 +115,6 @@ void autonomous() {
     right_mtr6 = 0;
 	lift_mtr8 = 0;
     lift_mtr9 = 0;
-
-    */
 }
 /**
  * Runs the operator control code. This function will be started in its own task
@@ -143,7 +143,6 @@ void opcontrol() {
 
     pros::Motor lift_mtr8(4);               // Lift motor setup, (port)
     pros::Motor lift_mtr9(5);
-
 
 	while (true) {
 		// Fetch controller
@@ -179,10 +178,42 @@ void opcontrol() {
             lift_mtr8 = -100;
             lift_mtr9 = 100;        }
         else {
-            lift_mtr8 = 0;
-            lift_mtr9 = 0;
+            lift_mtr8 = 3;
+            lift_mtr9 = -3;
         }
 
+    #define DIGITAL_SENSOR_PORTA 'A'
+    pros::ADIDigitalOut pistonA (DIGITAL_SENSOR_PORTA);
+    pistonA.set_value(true);
+
+    #define DIGITAL_SENSOR_PORTB 'B'
+    pros::ADIDigitalOut pistonB (DIGITAL_SENSOR_PORTB);
+    pistonB.set_value(true);
+
+    #define DIGITAL_SENSOR_PORTC 'C'
+    pros::ADIDigitalOut pistonC (DIGITAL_SENSOR_PORTC);
+    pistonC.set_value(true);
+
+    #define DIGITAL_SENSOR_PORTD 'D'
+    pros::ADIDigitalOut pistonD (DIGITAL_SENSOR_PORTD);
+    pistonD.set_value(true);
+
+
+    #define DIGITAL_SENSOR_PORTE 'E'
+    pros::ADIDigitalOut pistonE (DIGITAL_SENSOR_PORTE);
+    pistonE.set_value(true);
+
+    #define DIGITAL_SENSOR_PORTF 'F'
+    pros::ADIDigitalOut pistonF (DIGITAL_SENSOR_PORTF);
+    pistonF.set_value(true);
+
+    #define DIGITAL_SENSOR_PORTG 'G'
+    pros::ADIDigitalOut pistonG (DIGITAL_SENSOR_PORTG);
+    pistonG.set_value(true);
+
+    #define DIGITAL_SENSOR_PORTH 'H'
+    pros::ADIDigitalOut pistonH (DIGITAL_SENSOR_PORTH);
+    pistonH.set_value(true);
     }
 }
 		// Reverse the above motors by putting a - after the =
